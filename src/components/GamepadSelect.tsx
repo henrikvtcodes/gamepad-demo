@@ -1,25 +1,13 @@
 import { useEffect, useState } from "react";
-import { useAtom } from "jotai";
+import { useAtom, atom } from "jotai";
 
 import { selectedGamepad } from "../utils/gamepadState";
+import { useGamepads } from "../utils/getGamepadsQuery";
+
 export const GamepadSelect = () => {
-  const [gamepads, setGamepads] = useState<Gamepad[] | null>([]);
+  const { data: gamepads } = useGamepads();
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const gamepads = navigator.getGamepads();
-      const filteredGamepads = Array.from(gamepads).filter((gamepad) => {
-        return gamepad !== null;
-      }) as Gamepad[];
-
-      setGamepads(filteredGamepads);
-    }, 100);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const [selectedGamepadAtom, setSelectedGamepadAtom] =
-    useAtom(selectedGamepad);
+  const [, setSelectedGamepadAtom] = useAtom(selectedGamepad);
 
   const onSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (e.target.value === "none") {
@@ -32,7 +20,6 @@ export const GamepadSelect = () => {
 
     if (gamepad) {
       setSelectedGamepadAtom(gamepad);
-      console.log(`Selected gamepad at index ${gamepadIndex}: ${gamepad.id}`);
     }
   };
   return (
