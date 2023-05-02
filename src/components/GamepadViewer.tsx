@@ -1,6 +1,8 @@
 import { useAtom } from "jotai";
 
 import { selectedGamepad as selectedGamepadAtom } from "../utils/gamepadState";
+import { GamepadOutputs } from "./GamepadOutputs";
+import { GamepadTester } from "./GamepadTester";
 
 export const GamepadViewer = () => {
   const [selectedGamepad] = useAtom(selectedGamepadAtom);
@@ -17,6 +19,8 @@ export const GamepadViewer = () => {
           <h3 className="text-lg">{selectedGamepad.id}</h3>
         </div>
       </div>
+      <GamepadTester />
+      <GamepadOutputs />
     </section>
   );
 };

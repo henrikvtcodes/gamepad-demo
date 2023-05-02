@@ -7,7 +7,8 @@ import { useGamepads } from "../utils/getGamepadsQuery";
 export const GamepadSelect = () => {
   const { data: gamepads } = useGamepads();
 
-  const [, setSelectedGamepadAtom] = useAtom(selectedGamepad);
+  const [selectedGamepadAtom, setSelectedGamepadAtom] =
+    useAtom(selectedGamepad);
 
   const onSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (e.target.value === "none") {
@@ -23,18 +24,12 @@ export const GamepadSelect = () => {
     }
   };
   return (
-    <div className="my-4">
-      <label
-        htmlFor="location"
-        className="block text-sm font-medium text-gray-700"
-      >
-        Gamepad
-      </label>
+    <div className="my-2">
       <select
         id="location"
         name="location"
         className="w-96 mt-1 block rounded-md border-gray-300 text-base focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
-        defaultValue={"none"}
+        defaultValue={selectedGamepadAtom?.index ?? "none"}
         onChange={onSelect}
       >
         <option value={"none"}>Select a Gamepad</option>
