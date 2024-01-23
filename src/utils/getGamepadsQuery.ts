@@ -11,5 +11,5 @@ const getGamepads = () => {
 };
 
 export const useGamepads = () => {
-  return useQuery(["gamepads"], getGamepads);
+  return useQuery({ queryKey: ["gamepads"], queryFn: getGamepads });
 };

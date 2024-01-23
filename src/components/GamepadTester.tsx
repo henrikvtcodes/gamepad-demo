@@ -1,9 +1,7 @@
-import { useAtom } from "jotai";
-
-import { selectedGamepad as selectedGamepadAtom } from "../utils/gamepadState";
+import { useGamepadState } from "../utils/gamepadState";
 
 export const GamepadTester = () => {
-  const [selectedGamepad] = useAtom(selectedGamepadAtom);
+  const selectedGamepad = useGamepadState((state) => state.selectedGamepad);
 
   if (!selectedGamepad) return null;
   // selectedGamepad.vibrationActuator.playEffect("dual-rumble", {

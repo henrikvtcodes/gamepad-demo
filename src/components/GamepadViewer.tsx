@@ -1,13 +1,14 @@
-import { useAtom } from "jotai";
-
-import { selectedGamepad as selectedGamepadAtom } from "../utils/gamepadState";
+import { useEffect } from "react";
+import { useGamepadState } from "../utils/gamepadState";
 import { GamepadOutputs } from "./GamepadOutputs";
 import { GamepadTester } from "./GamepadTester";
 
 export const GamepadViewer = () => {
-  const [selectedGamepad] = useAtom(selectedGamepadAtom);
+  const selectedGamepadId = useGamepadState(
+    (state) => state.selectedGamepad?.id
+  );
 
-  if (!selectedGamepad) {
+  if (!selectedGamepadId) {
     return null;
   }
 
@@ -16,7 +17,7 @@ export const GamepadViewer = () => {
       <div className="col-start-1 col-span-1 row-start-1 row-span-1">
         <div>
           <span className="text-gray-600 text-sm">Name</span>
-          <h3 className="text-lg">{selectedGamepad.id}</h3>
+          <h3 className="text-lg">{selectedGamepadId}</h3>
         </div>
       </div>
       <GamepadTester />

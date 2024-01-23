@@ -1,8 +1,7 @@
-import { useAtom, atom } from "jotai";
-
-import { selectedGamepad as selectedGamepadAtom } from "../utils/gamepadState";
+import { useGamepadState } from "../utils/gamepadState";
 
 import "./GamepadOutputs.css";
+import { useEffect } from "react";
 
 const GamepadButton = ({
   button,
@@ -11,29 +10,40 @@ const GamepadButton = ({
   button: GamepadButton;
   index: number;
 }) => {
+  let i = 0;
+
+  useEffect(() => {
+    i++;
+    console.log("rendered button", i);
+  }, [button]);
   return (
-    <div
+    <li
+      key={i}
       className={`p-3 rounded-md border-spacing-0 border-gray-700 h-12 w-14 text-center ${
         button.pressed ? "bg-green-600" : "bg-gray-400"
       }`}
     >
       B{index + 1}
-    </div>
+    </li>
   );
 };
 
 export const GamepadOutputs = () => {
-  const [selectedGamepad] = useAtom(selectedGamepadAtom);
+  const selectedGamepad = useGamepadState((state) => state.selectedGamepad);
+
+  useEffect(() => {
+    if (!selectedGamepad) return;
+  }, [selectedGamepad?.axes, selectedGamepad?.buttons]);
 
   if (!selectedGamepad) return null;
 
   return (
     <div className="col-start-2 col-span-1 row-start-1 row-span-2 flex flex-col">
-      <div className="flex flex-wrap gap-2">
+      <ul className="flex flex-wrap gap-2">
         {selectedGamepad.buttons.map((button, index) => (
           <GamepadButton key={index} button={button} index={index} />
         ))}
-      </div>
+      </ul>
     </div>
   );
 };

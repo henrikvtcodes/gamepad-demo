@@ -1,27 +1,28 @@
-import { atom } from "jotai";
 import { create } from "zustand";
 
-export const selectedGamepad = atom<Gamepad | null>(null);
+interface ButtonState {
+  buttons: GamepadButton[];
+  axes: number[];
+}
 
 interface GamepadState {
   // State
   selectedGamepad: Gamepad | null;
-  gamepadState: {
-    buttons: GamepadButton[];
-    axes: number[];
-  } | null;
+  buttonState: ButtonState | null;
 
   // Actions
   setGamepad: (gamepad: Gamepad) => void;
   clearGamepad: () => void;
+  setButtonState: (btnState: ButtonState) => void;
 }
 
 export const useGamepadState = create<GamepadState>()((set) => ({
   // State
   selectedGamepad: null,
-  gamepadState: null,
+  buttonState: null,
 
   // Actions
   setGamepad: (gamepad) => set({ selectedGamepad: gamepad }),
-  clearGamepad: () => set({ selectedGamepad: null }),
+  clearGamepad: () => set({ selectedGamepad: null, buttonState: null }),
+  setButtonState: (btns) => set({ buttonState: btns }),
 }));
