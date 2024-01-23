@@ -9,7 +9,7 @@ export const onGamepadConnect = (e: GamepadEvent) => {
   toast.success(
     `Gamepad connected at index ${e.gamepad.index}: ${e.gamepad.id}.`
   );
-  queryClient.invalidateQueries(["gamepads"]);
+  queryClient.invalidateQueries({ queryKey: ["gamepads"] });
 };
 
 export const onGamepadDisconnect = (e: GamepadEvent) => {
@@ -19,5 +19,5 @@ export const onGamepadDisconnect = (e: GamepadEvent) => {
   toast.error(
     `Gamepad disconnected from index ${e.gamepad.index}: ${e.gamepad.id}`
   );
-  queryClient.invalidateQueries(["gamepads"]);
+  queryClient.invalidateQueries({ queryKey: ["gamepads"] });
 };
